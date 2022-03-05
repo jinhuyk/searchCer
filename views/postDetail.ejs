@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles/style.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <div class="header-top">
+        <a href="/"><div><img src = "/resources/logo.png" height="100"></div></a>
+        
+        <a href="/login" class="head-rt">
+            <span><img src="/resources/login.png" height="30"></span>
+        </a>
+        <a href="/post" class="head-lf">
+            <span><img src="/resources/post.png" height="30"></span>
+        </a>
+    </div>
+    <hr/>
+    
+    <div style="padding: 5px;">
+        <p style="font-weight: bold; font-size: 20px;">[<%= data.type %>] <%= data.title %></p>
+        <div class="de-detail"> <span><%=data.wt %> | </span>
+            
+            <span><%= data.date %></span>
+       
+                <span><%= data.time%></span>
+
+        </div>
+        <hr/>
+        <p><%= data.body %></p>
+    </div>
+    <div style="text-align: center; ">
+        <span ><img class="btna" data-id="good" src = "/resources/whatis/good.PNG" height="60" width="60"  style="border: 2px solid;"><span style="margin-left: 3px; font-weight: bold; color: blue;"><%= data.good%></span></span>
+        <span ><img class="btna" data-id="wtf" src = "/resources/whatis/what.PNG" height="60"  width="60" style="border: 2px solid;"><span style="margin-left: 3px; font-weight: bold; color: black;"><%= data.wtf%></span></span>
+        <span ><img class="btna" data-id="bad" src = "/resources/whatis/bad.PNG" height="60" width="60"   style="border: 2px solid;"><span style="margin-left: 3px; font-weight: bold; color: red;"><%= data.bad%></span></span>
+    </div>
+    <hr/>
+    <div>
+        <button class="btn btn-danger" id = "del">삭제</button>
+        <button class="btn btn-light" onclick="location.href = '/edit/'+<%= data._id %> ">수정하기</button>
+    </div>
+
+    <hr/>
+    <div>
+        <div>
+            <p>전체 말잇기</p>
+        </div>
+        <hr/>
+        <div>
+            <ul class="list-group">
+                <% for(var i =0; i < cmtdata.length;i++) { %>
+                <li class = "list-group-item">
+                    <div class="cmt-detail"> <div style="font-weight: bold;"><%= cmtdata[i].wt %> <span style="position:absolute; right:20px;"> <img  class="delcmt" data-id="<%= cmtdata[i]._id %>" src="/resources/delete.png" height="30"></span></div>
+                    <div><%= cmtdata[i].body %></div>
+                    <div>
+                        <% var today = new Date();
+                        var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+                        if(date == cmtdata[i].date){ %>
+                            <span style="font-size: 10px; color: gainsboro;"><%= cmtdata[i].time %></span>
+                        <% }
+                        else{ %>
+                         <span style="font-size: 10px; color: gainsboro;"><%= cmtdata[i].date%></span>
+                     <% } %>
+                    </div>
+                            
+    
+                    </div>
+                </li>
+                <% } %>
+            </ul>
+        </div>
+        <div style="margin: 5px;">
+            <div class="nick" style="margin: 5px;" >                
+                <input type="text"class="nick-text" id="nick" placeholder="익명(닉네임)" >
+                <input type="password"class="nick-text" id="pw" placeholder="비밀번호(설정하지 않으면 0000입니다)">
+            </div>
+            <div contenteditable="true" class="cmt-text"  id = "editor" style="margin: 5px;" ></div>
+            <div style="margin: 5px;">
+                <button class="btn btn-outline-dark" id="sumt" >말 잇기</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+<script>
+    $('#sumt').click(function(){
+        var body = document.getElementById('editor').innerText;
+        var wt = String($('#nick').val())
+        var pw = String($('#pw').val())
+        var today = new Date();
+        var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+        var time = today.getHours()+':'+today.getMinutes()
+        console.log(body)
+        $.ajax({
+            method:"POST",
+            url:'/comment',
+            data : {
+                body : body,
+                wt : wt,
+                pw : pw,
+                date : date,
+                time : time,
+                parentId : <%= data._id %>
+            }
+        }).done(function(rst){
+            location.reload()
+        })
+    })
+
+
+
+
+
+    $('.btna').click(function(e){
+        console.log(e.target.dataset.id)
+        $.ajax({
+            method : 'POST',
+            url : '/like',
+            data : {
+                id : <%= data._id %>,
+                like : e.target.dataset.id
+            }
+        }).done(function(rst){
+            location.reload();
+        })
+    })
+
+
+    $('.delcmt').click(function(e){
+        let check = prompt("비밀번호를 입력해주세요")
+        console.log(e.target.dataset.id)
+        $.ajax({
+            method : 'DELETE',
+            url : '/deletecmt',
+            data : {
+                id : e.target.dataset.id,
+                pw : check
+            }
+        }).done(function(rst){
+            if(rst == 'delete'){
+                alert("삭제하였습니다.")
+                location.reload();
+            }else{
+                alert('비밀번호가 다릅니다')
+                alert('권한이 없습니다')
+            }
+        })
+    })
+
+
+
+
+
+
+    function redirectList (){
+        window.location.href="/"
+    }
+    $('#del').click(function(){
+        let check = prompt("비밀번호를 입력해주세요")
+        console.log(check)
+        $.ajax({
+            method : 'DELETE',
+            url : '/delete',
+            data : {
+                id : <%= data._id %>,
+                pw : check
+            }
+        }).done(function(rst){
+            if(rst == 'delete'){
+                alert("삭제하였습니다.")
+                redirectList();
+            }else{
+                alert('비밀번호가 다릅니다')
+                alert('권한이 없습니다')
+                redirectList();
+            }
+        })
+    })
+</script>
+
+
+</body>
+</html>
