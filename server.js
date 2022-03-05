@@ -8,7 +8,7 @@ app.use(express.urlencoded({extended: true}))
 require('dotenv').config()
 const bcrypt =require('bcrypt')
 const MongoClient = require('mongodb').MongoClient;
-const port = process.env.PORT || 3000;
+var port = process.env.PORT || 3000;
 var db;
 MongoClient.connect(process.env.DB_URL, function(err,client){
     if(err) return console.log(err);
