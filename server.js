@@ -8,7 +8,7 @@ app.use(express.urlencoded({extended: true}))
 require('dotenv').config()
 const bcrypt =require('bcrypt')
 const MongoClient = require('mongodb').MongoClient;
-
+const port = process.env.PORT;
 var db;
 MongoClient.connect(process.env.DB_URL, function(err,client){
     if(err) return console.log(err);
@@ -18,7 +18,7 @@ app.set('view engine', 'ejs');
 app.use('/styles',express.static(path.join(__dirname,'styles')))
 app.use('/resources',express.static(path.join(__dirname,'resources')))
 
-app.listen(8080, function(){
+app.listen(port, function(){
     console.log('open 8080')
 })
 app.get('/',function(req,res){
