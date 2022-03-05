@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "heroku-postbuild" : "npx webpack"
+    "heroku-postbuild": "npx webpack"
   },
   "author": "",
   "license": "ISC",
@@ -20,5 +20,8 @@
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
     "store": "^2.0.12"
+  },
+  "devDependencies": {
+    "webpack-cli": "^4.9.2"
   }
 }
