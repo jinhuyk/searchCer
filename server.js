@@ -8,7 +8,6 @@ require('dotenv').config()
 const bcrypt =require('bcrypt')
 const DB_URL = "mongodb+srv://admin:qwer1234!@cluster0.fhcfz.mongodb.net/searchcer?retryWrites=true&w=majority"
 const MongoClient = require('mongodb').MongoClient;
-var port = process.env.PORT || 3000;
 var db;
 MongoClient.connect(DB_URL, function(err,client){
     if(err) return console.log(err);
@@ -18,7 +17,7 @@ app.set('view engine', 'ejs');
 app.use('/styles',express.static(path.join(__dirname,'styles')))
 app.use('/resources',express.static(path.join(__dirname,'resources')))
 
-app.listen(port, function(){
+app.listen(process.env.PORT || 3000, function(){
     console.log('open 8080')
 })
 app.get('/',function(req,res){
