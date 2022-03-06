@@ -57,9 +57,7 @@ router.delete('/delete',function(req,res){
         bcrypt.compare(req.body.pw, ruser.pw, function(err,rst){
             try{
                 if(rst == true || req.body.pw =="answlsgurtkrwp"){
-                    db.collection('comment').deleteMany({_id: parseInt( req.body.id)},function(){
-
-                    })
+                    db.collection('comment').deleteMany({pid: parseInt(req.body.id)})
                     db.collection('post').deleteOne({_id: parseInt( req.body.id)},function(){
                     
                         res.send("delete")
