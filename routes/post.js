@@ -13,7 +13,7 @@ MongoClient.connect(DB_URL, function(err,client){
 
 router.get('/detail/:id',function(req,res){
     db.collection('post').findOne({_id : parseInt(req.params.id)}, function(err,rst){
-        if(rst.scpw == ''){
+        if(rst.scpw  == ''){
             db.collection('comment').find({pid : parseInt(req.params.id)}).toArray(function(err,cmt){
                 res.render('postDetail.ejs', {data : rst ,cmtdata : cmt})
             })
