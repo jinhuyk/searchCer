@@ -195,15 +195,5 @@ router.post('/comment',function(req,res){
     
 })
 
-router.post('/checkscrt',function(req, res){
-    db.collection('post').findOne({_id : req.body.id},function(err,rst){
-        if(rst.scpw == req.body.pw){
-            res.send("ok")
-        }
-        else {
-            res.send("no")
-        }
-    })
-})
 
 module.exports = router;
