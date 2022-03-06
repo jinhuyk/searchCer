@@ -123,10 +123,11 @@ function redirectList (){
             alert("제목 또는 글을 작성해주세요")
         }
         else{
-            var check = ''
+            
             if(wt=='') {wt = "익명"}
             if(pw=='') {pw = "0000"}
             if(type=='비밀') {
+                var check = ''
                 check = prompt("비밀 게시판 전용 암호를 입력해주세요(상대방이 이 글에 들어올때 필요한 암호입니다) ")
             }
             $.ajax({
