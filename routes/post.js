@@ -18,6 +18,11 @@ router.get('/detail/:id',function(req,res){
                 res.render('postDetail.ejs', {data : rst ,cmtdata : cmt})
             })
             
+        }else if(rst.scpw == req.cookies.scrt){
+            db.collection('comment').find({pid : parseInt(req.params.id)}).toArray(function(err,cmt){
+                res.render('postDetail.ejs', {data : rst ,cmtdata : cmt})
+            })
+            
         }
         else{
 
@@ -36,11 +41,6 @@ router.post('/check',function(req,res){
                 res.render('postDetail.ejs', {data : rst ,cmtdata : cmt})
             })
         } 
-        else if(req.cookies.scrt==rst.scpw){
-            db.collection('comment').find({pid : parseInt(req.body.id)}).toArray(function(err,cmt){
-                res.render('postDetail.ejs', {data : rst ,cmtdata : cmt})
-            })
-        }
         else {
             res.redirect('/detail/'+req.body.id)
         }
