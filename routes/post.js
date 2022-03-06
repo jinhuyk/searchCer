@@ -4,7 +4,7 @@ const bcrypt =require('bcryptjs');
 const { render } = require('ejs');
 var db;
 
-MongoClient.connect(process.env.DB_URLDB_URL, function(err,client){
+MongoClient.connect(process.env.DB_URL, function(err,client){
     if(err) return console.log(err);
     db = client.db('searchcer');
 })
