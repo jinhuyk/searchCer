@@ -91,9 +91,6 @@ function redirectList (){
         else{
             if(wt=='') {wt = "익명"}
             if(pw=='') {pw = "0000"}
-            if(type=='비밀'){
-                let check= prompt("비밀게시판용 비밀번호를 입력해주세요")
-            }
             console.log(type)
             $.ajax({
                 method : 'POST',
@@ -106,8 +103,7 @@ function redirectList (){
                     wt : wt,
                     pw : pw,
                     date : date,
-                    time : time,
-                    scpw : check
+                    time : time
                 }
         }).done(function(rst){
             redirectList();
