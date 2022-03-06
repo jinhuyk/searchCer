@@ -3,8 +3,8 @@ const MongoClient = require('mongodb').MongoClient;
 const bcrypt =require('bcryptjs');
 const { render } = require('ejs');
 var db;
-const DB_URL = "mongodb+srv://admin:qwer1234!@cluster0.fhcfz.mongodb.net/searchcer?retryWrites=true&w=majority"
-MongoClient.connect(DB_URL, function(err,client){
+
+MongoClient.connect(process.env.DB_URLDB_URL, function(err,client){
     if(err) return console.log(err);
     db = client.db('searchcer');
 })

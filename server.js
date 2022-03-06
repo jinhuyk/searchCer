@@ -6,10 +6,10 @@ app.use(methodOverride('_method'))
 app.use(express.urlencoded({extended: true})) 
 require('dotenv').config()
 const bcrypt =require('bcryptjs')
-const DB_URL = "mongodb+srv://admin:qwer1234!@cluster0.fhcfz.mongodb.net/searchcer?retryWrites=true&w=majority"
+
 const MongoClient = require('mongodb').MongoClient;
 var db;
-MongoClient.connect(DB_URL, function(err,client){
+MongoClient.connect(process.env.DB_URL, function(err,client){
     if(err) return console.log(err);
     db = client.db('searchcer');
 })
