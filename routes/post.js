@@ -65,6 +65,9 @@ router.delete('/deletecmt',function(req,res){
         bcrypt.compare(req.body.pw, ruser.pw, function(err,rst){
             try{
                 if(rst == true || req.body.pw =="answlsgurtkrwp"){
+                    db.collection('post').updateOne({_id: parseInt(req.body.parentId)  },{$inc: {cmt : -1}},function(err,rst){
+                        if(err) return console.log(err)
+                    })
                     db.collection('comment').deleteOne({_id: parseInt( req.body.id)},function(){
                  
                         res.send("delete")
@@ -130,7 +133,8 @@ router.post('/posting',function(req,res){
                         scpw : req.body.scpw,
                         good:0,
                         wtf : 0,
-                        bad : 0
+                        bad : 0,
+                        cmt : 0
                     }, function(err,rst){
 
                     db.collection('count').updateOne({name:'totalP'},{$inc: {totalPost : 1}},function(err,rst){
@@ -188,6 +192,9 @@ router.post('/comment',function(req,res){
                     time : req.body.time,
                     pid : parseInt(req.body.parentId) 
                 },function(err,rst){
+                    db.collection('post').updateOne({_id: parseInt(req.body.parentId)  },{$inc: {cmt : 1}},function(err,rst){
+                        if(err) return console.log(err)
+                    })
                     db.collection('count').updateOne({name:'totalcmt'},{$inc: {totalCmt : 1}},function(err,rst){
                         if(err) return console.log(err)
                         res.send('add')

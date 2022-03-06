@@ -52,10 +52,10 @@
                 <li style="cursor: pointer" class = "list-group-item" onclick="location.href = '/detail/'+ <%= posts[i]._id %>" >
                     <div class="li-title"><span>[<%= posts[i].type %>]</span>
                         <% if( posts[i].type == "비밀") { %>
-                            <span>(비밀글 입니다)</span> 
+                            <span>(비밀글 입니다)</span> <span style="color: blue;">[<%= posts[i].cmt %>]</span>
                             <% } 
                             else{ %> 
-                                <span><%= posts[i].title %></span>
+                                <span><%= posts[i].title %></span> <span style="color: blue;">[<%= posts[i].cmt %>]</span>
                              <% } %>
                             </div>
                     <div class="li-detail"> <span><%= posts[i].wt %> | </span>

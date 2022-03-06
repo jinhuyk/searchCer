@@ -154,7 +154,8 @@
             url : '/deletecmt',
             data : {
                 id : e.target.dataset.id,
-                pw : check
+                pw : check,
+                parentId : <%= data._id %>
             }
         }).done(function(rst){
             if(rst == 'delete'){
