@@ -2,10 +2,14 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const methodOverride = require('method-override')
+const cookieParser= require('cookie-parser');
+app.use(cookieParser())
+
 app.use(methodOverride('_method'))
 app.use(express.urlencoded({extended: true})) 
 require('dotenv').config()
-const bcrypt =require('bcryptjs')
+const bcrypt =require('bcryptjs');
+
 
 const MongoClient = require('mongodb').MongoClient;
 var db;
@@ -26,7 +30,6 @@ app.get('/',function(req,res){
         res.render('main.ejs', {posts : rst })
     })
 })
-
 
 
 

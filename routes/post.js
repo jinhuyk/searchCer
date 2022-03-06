@@ -3,6 +3,8 @@ const MongoClient = require('mongodb').MongoClient;
 const bcrypt =require('bcryptjs');
 const { render } = require('ejs');
 var db;
+const cookieParser= require('cookie-parser');
+router.use(cookieParser())
 const DB_URL = "mongodb+srv://admin:qwer1234!@cluster0.fhcfz.mongodb.net/searchcer?retryWrites=true&w=majority"
 MongoClient.connect(DB_URL, function(err,client){
     if(err) return console.log(err);
@@ -16,7 +18,8 @@ router.get('/detail/:id',function(req,res){
                 res.render('postDetail.ejs', {data : rst ,cmtdata : cmt})
             })
             
-        }else{
+        }
+        else{
 
             res.render('postCheck.ejs',{data : rst})
         }
@@ -29,9 +32,16 @@ router.post('/check',function(req,res){
     db.collection('post').findOne({_id : parseInt(req.body.id)}, function(err,rst){
         if(rst.scpw == req.body.check){
             db.collection('comment').find({pid : parseInt(req.body.id)}).toArray(function(err,cmt){
+                res.cookie('scrt',req.body.check,{maxAge: 300000 })
                 res.render('postDetail.ejs', {data : rst ,cmtdata : cmt})
             })
-        } else {
+        } 
+        else if(req.cookies.scrt==rst.scpw){
+            db.collection('comment').find({pid : parseInt(req.body.id)}).toArray(function(err,cmt){
+                res.render('postDetail.ejs', {data : rst ,cmtdata : cmt})
+            })
+        }
+        else {
             res.redirect('/detail/'+req.body.id)
         }
     })
