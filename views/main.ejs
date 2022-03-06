@@ -66,14 +66,12 @@
                              <% } %>
                             </div>
                     <div class="li-detail"> <span><%= posts[i].wt %> | </span>
-                            <% var today = new Date();
-                               var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
-                               if(date == posts[i].date){ %>
-                                   <span><%= posts[i].time %></span>
-                               <% }
-                               else{ %>
-                                <span><%= posts[i].date%></span>
-                            <% } %>
+       
+                                <span><%= posts[i].date%> | </span>
+                                   
+                  
+                                <span><%= posts[i].time %></span>
+               
     
                     </div>
                 </li>

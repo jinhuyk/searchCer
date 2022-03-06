@@ -84,14 +84,11 @@
                     <div class="cmt-detail"> <div style="font-weight: bold;"><%= cmtdata[i].wt %> <span style="position:absolute; right:20px;"> <img  class="delcmt" data-id="<%= cmtdata[i]._id %>" src="/resources/delete.png" height="30"></span></div>
                     <div><%= cmtdata[i].body %></div>
                     <div>
-                        <% var today = new Date();
-                        var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
-                        if(date == cmtdata[i].date){ %>
+                 
                             <span style="font-size: 10px; color: gainsboro;"><%= cmtdata[i].time %></span>
-                        <% }
-                        else{ %>
+         
                          <span style="font-size: 10px; color: gainsboro;"><%= cmtdata[i].date%></span>
-                     <% } %>
+             
                     </div>
                             
     
