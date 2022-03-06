@@ -3,11 +3,11 @@ const MongoClient = require('mongodb').MongoClient;
 const bcrypt =require('bcryptjs')
 var db;
 
-MongoClient.connect(process.env.DB_URL, function(err,client){
+const DB_URL = "mongodb+srv://admin:qwer1234!@cluster0.fhcfz.mongodb.net/searchcer?retryWrites=true&w=majority"
+MongoClient.connect(DB_URL, function(err,client){
     if(err) return console.log(err);
     db = client.db('searchcer');
 })
-
 
 const passport= require('passport');
 
