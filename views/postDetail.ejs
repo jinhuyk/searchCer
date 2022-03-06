@@ -165,7 +165,7 @@
                 like : e.target.dataset.id
             }
         }).done(function(rst){
-            location.reload();
+            location.href='/detail/'+<%= data._id %>
         })
     })
 
@@ -183,7 +183,7 @@
         }).done(function(rst){
             if(rst == 'delete'){
                 alert("삭제하였습니다.")
-                location.reload();
+                location.href='/detail/'+<%= data._id %>
             }else{
                 alert('비밀번호가 다릅니다')
                 alert('권한이 없습니다')
