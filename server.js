@@ -38,3 +38,4 @@ function onLogin(req,res,next){
 }
 app.use('/', require('./routes/post.js') );
 app.use('/', require('./routes/login.js') );
+app.use('/', require('./routes/board.js') );

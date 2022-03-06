@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>즐 커뮤니티</title>
     <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     
 
@@ -37,9 +38,23 @@
             <span><input type="radio" name="type" value="웃긴">웃긴</span>
             <span><input type="radio" name="type" value="비밀">비밀</span>
         </div>
+        <div class="toolbar"> <!-- B -->
+            <a href="" data-command='bold'>
+              <i class='fa fa-bold'></i>
+            </a>
+            <a href="" data-command='italic'>
+              <i class='fa fa-italic'></i>
+            </a>
+            <a href="" data-command='underline'>
+              <i class='fa fa-underline'></i>
+            </a>
+            <a href="" data-command='strikeThrough'style="margin-right: 8px;">
+              <i class='fa fa-strikethrough'></i>
+            </a>
+          </div>
         <div>
 
-            <div contenteditable="true" class="body-text"  id = "editor"><%= data.body %></div>
+            <div contenteditable="true" class="body-text"  id = "editor"><%- data.body %></div>
         </div>
         <div class="nick">                
             <input type="password"class="nick-text" id="pw" placeholder="비밀번호">
@@ -80,7 +95,7 @@
         var today = new Date();
         var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
         var time = today.getHours()+':'+today.getMinutes()
-        console.log(type)
+    
         $.ajax({
             method : 'POST',
             url:'/editing',
@@ -107,7 +122,15 @@
         })
     })
 </script>
+<script>
+    document.querySelectorAll('.toolbar a') // C 
+      .forEach(aEl => aEl.addEventListener('click', function (e) {  
+        e.preventDefault(); 
+        const command = aEl.dataset.command;  
+          document.execCommand(command); 
+        }));    
 
+  </script>
 
 </body>
 </html>

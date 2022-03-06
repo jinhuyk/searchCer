@@ -22,7 +22,7 @@
     </div>
     <hr/>
     
-    <div style="padding: 5px;">
+    <div class="content-box" style="padding: 5px;">
         <p style="font-weight: bold; font-size: 20px;">[<%= data.type %>] <%= data.title %></p>
         <div class="de-detail"> <span><%=data.wt %> | </span>
             
@@ -32,7 +32,7 @@
 
         </div>
         <hr/>
-        <p><%= data.body %></p>
+        <div class="htmlbody"><%- data.body %> </div>
     </div>
     <div style="text-align: center; ">
         <span ><img class="btna" data-id="good" src = "/resources/whatis/good.PNG" height="60" width="60"  style="border: 2px solid;"><span style="margin-left: 3px; font-weight: bold; color: blue;"><%= data.good%></span></span>
@@ -97,6 +97,7 @@
 
 
 <script>
+    
     $('#sumt').click(function(){
         var body = document.getElementById('editor').innerText;
         var wt = String($('#nick').val())
@@ -104,7 +105,7 @@
         var today = new Date();
         var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
         var time = today.getHours()+':'+today.getMinutes()
-        console.log(body)
+
         $.ajax({
             method:"POST",
             url:'/comment',
@@ -126,7 +127,6 @@
 
 
     $('.btna').click(function(e){
-        console.log(e.target.dataset.id)
         $.ajax({
             method : 'POST',
             url : '/like',
@@ -142,7 +142,6 @@
 
     $('.delcmt').click(function(e){
         let check = prompt("비밀번호를 입력해주세요")
-        console.log(e.target.dataset.id)
         $.ajax({
             method : 'DELETE',
             url : '/deletecmt',
@@ -171,7 +170,6 @@
     }
     $('#del').click(function(){
         let check = prompt("비밀번호를 입력해주세요")
-        console.log(check)
         $.ajax({
             method : 'DELETE',
             url : '/delete',

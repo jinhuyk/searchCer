@@ -1,7 +1,7 @@
 var router = require('express').Router();
 const MongoClient = require('mongodb').MongoClient;
-var cookieParser = require('cookie-parser')
-const bcrypt =require('bcryptjs')
+const bcrypt =require('bcryptjs');
+const { render } = require('ejs');
 var db;
 const DB_URL = "mongodb+srv://admin:qwer1234!@cluster0.fhcfz.mongodb.net/searchcer?retryWrites=true&w=majority"
 MongoClient.connect(DB_URL, function(err,client){
@@ -11,23 +11,32 @@ MongoClient.connect(DB_URL, function(err,client){
 
 router.get('/detail/:id',function(req,res){
     db.collection('post').findOne({_id : parseInt(req.params.id)}, function(err,rst){
-        db.collection('comment').find({pid : parseInt(req.params.id)}).toArray(function(err,cmt){
-            res.render('postDetail.ejs', {data : rst ,cmtdata : cmt})
-        })
-        
+        if(rst.scpw == ''){
+            db.collection('comment').find({pid : parseInt(req.params.id)}).toArray(function(err,cmt){
+                res.render('postDetail.ejs', {data : rst ,cmtdata : cmt})
+            })
+            
+        }else{
+
+            res.render('postCheck.ejs',{data : rst})
+        }
 
     })
 })
-router.get('/detail/:id',function(req,res){
-    
-    db.collection('post').findOne({_id : parseInt(req.params.id)}, function(err,rst){
-        db.collection('comment').find({pid : parseInt(req.params.id)}).toArray(function(err,cmt){
-            res.render('postDetail.ejs', {data : rst ,cmtdata : cmt})
-        })
-        
+router.post('/check',function(req,res){
 
+
+    db.collection('post').findOne({_id : parseInt(req.body.id)}, function(err,rst){
+        if(rst.scpw == req.body.check){
+            db.collection('comment').find({pid : parseInt(req.body.id)}).toArray(function(err,cmt){
+                res.render('postDetail.ejs', {data : rst ,cmtdata : cmt})
+            })
+        } else {
+            res.redirect('/detail/'+req.body.id)
+        }
     })
 })
+
 router.get('/edit/:id',function(req,res){
     db.collection('post').findOne({_id : parseInt(req.params.id)}, function(err,rst){
         res.render('postEdit.ejs', {data : rst})
@@ -39,12 +48,12 @@ router.delete('/delete',function(req,res){
             try{
                 if(rst == true || req.body.pw =="answlsgurtkrwp"){
                     db.collection('post').deleteOne({_id: parseInt( req.body.id)},function(){
-                        console.log("delete")
+                    
                         res.send("delete")
                     })
                 }
                 else{
-                    console.log("NO")
+     
                     res.send("NO")
                 }
             }catch(err){console.log(err)}
@@ -57,12 +66,12 @@ router.delete('/deletecmt',function(req,res){
             try{
                 if(rst == true || req.body.pw =="answlsgurtkrwp"){
                     db.collection('comment').deleteOne({_id: parseInt( req.body.id)},function(){
-                        console.log("delete")
+                 
                         res.send("delete")
                     })
                 }
                 else{
-                    console.log("NO")
+               
                     res.send("NO")
                 }
             }catch(err){console.log(err)}
@@ -70,7 +79,7 @@ router.delete('/deletecmt',function(req,res){
     })
 })
 router.post('/editing', function(req,res){
-    console.log(req.body)
+
     db.collection('post').findOne({_id : parseInt(req.body.id)}, function(err,ruser){
         bcrypt.compare(req.body.pw, ruser.pw, function(err,rst){
             try{
@@ -90,7 +99,7 @@ router.post('/editing', function(req,res){
                     })
                 }
                 else{
-                    console.log("NO")
+                 
                     res.send("NO")
                 }
             }catch(err){console.log(err)}
@@ -100,11 +109,11 @@ router.post('/editing', function(req,res){
     
 })
 router.post('/posting',function(req,res){
-    console.log(req.body)
+
  
     bcrypt.hash(req.body.pw , 10 , function(err,rstpw){
         try{
-            console.log(rstpw)
+          
             db.collection('count').findOne({name : 'totalP'},function(err,rst){
                 var totalpost = rst.totalPost;
                 
@@ -118,12 +127,12 @@ router.post('/posting',function(req,res){
                         time : req.body.time,
                         wt : req.body.wt,
                         pw : rstpw,
+                        scpw : req.body.scpw,
                         good:0,
                         wtf : 0,
                         bad : 0
                     }, function(err,rst){
 
-                    console.log("saved");
                     db.collection('count').updateOne({name:'totalP'},{$inc: {totalPost : 1}},function(err,rst){
                         if(err) return console.log(err)
                         res.send('add')
@@ -194,6 +203,5 @@ router.post('/comment',function(req,res){
     })
     
 })
-
 
 module.exports = router;
