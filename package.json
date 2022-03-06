@@ -23,6 +23,7 @@
     "mongodb": "^4.4.1",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
+    "redux": "^4.1.2",
     "store": "^2.0.12"
   },
   "devDependencies": {
