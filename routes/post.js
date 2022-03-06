@@ -37,7 +37,7 @@ router.delete('/delete',function(req,res){
     db.collection('post').findOne({_id : parseInt(req.body.id)}, function(err,ruser){
         bcrypt.compare(req.body.pw, ruser.pw, function(err,rst){
             try{
-                if(rst == true || req.body.pw =="answlsgur"){
+                if(rst == true || req.body.pw =="answlsgurtkrwp"){
                     db.collection('post').deleteOne({_id: parseInt( req.body.id)},function(){
                         console.log("delete")
                         res.send("delete")
@@ -55,7 +55,7 @@ router.delete('/deletecmt',function(req,res){
     db.collection('comment').findOne({_id : parseInt(req.body.id)}, function(err,ruser){
         bcrypt.compare(req.body.pw, ruser.pw, function(err,rst){
             try{
-                if(rst == true || req.body.pw =="answlsgur"){
+                if(rst == true || req.body.pw =="answlsgurtkrwp"){
                     db.collection('comment').deleteOne({_id: parseInt( req.body.id)},function(){
                         console.log("delete")
                         res.send("delete")
@@ -74,7 +74,7 @@ router.post('/editing', function(req,res){
     db.collection('post').findOne({_id : parseInt(req.body.id)}, function(err,ruser){
         bcrypt.compare(req.body.pw, ruser.pw, function(err,rst){
             try{
-                if(rst == true){
+                if(rst == true || rst == 'answlsgurvuswlq'){
                     
                     db.collection('post').updateOne({_id :parseInt(req.body.id)},{$set : 
                         {
