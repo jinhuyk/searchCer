@@ -112,7 +112,8 @@
         var today = new Date();
         var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
         var time = today.getHours()+':'+today.getMinutes()
-
+        if(wt=='') {wt = "익명"}
+        if(pw=='') {pw = "0000"}
         $.ajax({
             method:"POST",
             url:'/comment',
