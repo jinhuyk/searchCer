@@ -5,7 +5,7 @@ const methodOverride = require('method-override')
 app.use(methodOverride('_method'))
 app.use(express.urlencoded({extended: true})) 
 require('dotenv').config()
-const bcrypt =require('bcrypt')
+const bcrypt =require('bcryptjs')
 const DB_URL = "mongodb+srv://admin:qwer1234!@cluster0.fhcfz.mongodb.net/searchcer?retryWrites=true&w=majority"
 const MongoClient = require('mongodb').MongoClient;
 var db;

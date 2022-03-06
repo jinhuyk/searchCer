@@ -1,7 +1,7 @@
 var router = require('express').Router();
 const MongoClient = require('mongodb').MongoClient;
 var cookieParser = require('cookie-parser')
-const bcrypt =require('bcrypt')
+const bcrypt =require('bcryptjs')
 var db;
 const DB_URL = "mongodb+srv://admin:qwer1234!@cluster0.fhcfz.mongodb.net/searchcer?retryWrites=true&w=majority"
 MongoClient.connect(DB_URL, function(err,client){
